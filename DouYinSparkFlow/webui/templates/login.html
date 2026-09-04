@@ -4,16 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="dark light">
-    <title>登录 | 续火花控制台</title>
-    <link rel="stylesheet" href="/static/app.css?v=20260710">
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("sparkflow-theme")
+          const theme = stored === "light" || stored === "dark"
+            ? stored
+            : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+          document.documentElement.dataset.theme = theme
+        } catch {
+          document.documentElement.dataset.theme = "dark"
+        }
+      })()
+    </script>
+    <title>登录 | 抖音续火花助手</title>
+    <link rel="stylesheet" href="/static/app.css?v=20260904">
   </head>
   <body class="login-page">
     <aside class="login-brand-panel">
       <a class="brand" href="/login">
         <span class="brand-mark"><i data-lucide="flame"></i></span>
         <span>
-          <strong class="brand-title">续火花</strong>
-          <small class="brand-subtitle">多账号控制平台</small>
+          <strong class="brand-title">抖音续火花助手</strong>
+          <small class="brand-subtitle">多账号续火花管理</small>
         </span>
       </a>
 
@@ -78,6 +91,6 @@
     </main>
 
     <script defer src="/static/lucide.min.js?v=20260710"></script>
-    <script defer src="/static/app.js?v=20260710"></script>
+    <script defer src="/static/app.js?v=20260904"></script>
   </body>
 </html>

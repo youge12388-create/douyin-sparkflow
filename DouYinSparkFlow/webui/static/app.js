@@ -10,21 +10,33 @@
     }
   };
 
-  const applyTheme = (theme) => {
+  const systemTheme = () =>
+    window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+  const applyTheme = (theme, { persist = false } = {}) => {
     const value = theme === "light" ? "light" : "dark";
     root.dataset.theme = value;
     root.style.colorScheme = value;
-    try {
-      localStorage.setItem(storageKey, value);
-    } catch {
-      // The active page can still switch themes when storage is unavailable.
+    if (persist) {
+      try {
+        localStorage.setItem(storageKey, value);
+      } catch {
+        // The active page can still switch themes when storage is unavailable.
+      }
     }
   };
 
-  applyTheme(storedTheme() || "dark");
+  const initialTheme = storedTheme();
+  const systemPreference = window.matchMedia?.("(prefers-color-scheme: dark)");
+  applyTheme(initialTheme || (systemPreference?.matches ? "dark" : "light"), {
+    persist: Boolean(initialTheme),
+  });
+  systemPreference?.addEventListener("change", (event) => {
+    if (!storedTheme()) applyTheme(event.matches ? "dark" : "light");
+  });
   document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
     button.addEventListener("click", () => {
-      applyTheme(root.dataset.theme === "light" ? "dark" : "light");
+      applyTheme(root.dataset.theme === "light" ? "dark" : "light", { persist: true });
     });
   });
 })();
