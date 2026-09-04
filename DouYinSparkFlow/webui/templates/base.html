@@ -5,8 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="dark light">
-    <title>{% block title %}续火花{% endblock %}</title>
-    <link rel="stylesheet" href="/static/app.css?v=20260824">
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("sparkflow-theme")
+          const theme = stored === "light" || stored === "dark"
+            ? stored
+            : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+          document.documentElement.dataset.theme = theme
+        } catch {
+          document.documentElement.dataset.theme = "dark"
+        }
+      })()
+    </script>
+    <title>{% block title %}抖音续火花助手{% endblock %}</title>
+    <link rel="stylesheet" href="/static/app.css?v=20260904">
   </head>
   <body data-page="{% block page_key %}dashboard{% endblock %}">
     <header class="mobile-topbar">
@@ -15,7 +28,7 @@
       </button>
       <a class="mobile-brand" href="/">
         <span class="brand-mark"><i data-lucide="flame"></i></span>
-        <span>续火花</span>
+        <span>抖音续火花助手</span>
       </a>
       <button class="icon-button" type="button" data-theme-toggle aria-label="切换主题" title="切换主题">
         <i data-lucide="sun" class="theme-light-icon"></i>
@@ -30,8 +43,8 @@
           <a class="brand" href="/">
             <span class="brand-mark"><i data-lucide="flame"></i></span>
             <span>
-              <strong class="brand-title">续火花</strong>
-              <small class="brand-subtitle">多账号控制平台</small>
+              <strong class="brand-title">抖音续火花助手</strong>
+              <small class="brand-subtitle">多账号续火花管理</small>
             </span>
           </a>
           <button class="icon-button sidebar-close" type="button" data-nav-close aria-label="关闭导航" title="关闭导航">
@@ -139,7 +152,7 @@
     </dialog>
 
     <script defer src="/static/lucide.min.js?v=20260710"></script>
-    <script defer src="/static/app.js?v=20260824"></script>
+    <script defer src="/static/app.js?v=20260904"></script>
     {% block scripts %}{% endblock %}
   </body>
 </html>
